@@ -1,19 +1,10 @@
-export const saveToken = (token) => {
-    localStorage.setItem('authToken', token);
-  };
-  
-  export const getToken = () => {
-    return localStorage.getItem('authToken');
-  };
-  
-  export const removeToken = () => {
-    localStorage.removeItem('authToken');
-  };
-  
-  export const saveSummaryToHistory = (summary) => {
+// src/services/storageService.js
+export const saveSummaryToHistory = (summary) => {
     const history = getSummaryHistory();
     history.unshift(summary);
-    localStorage.setItem('summaryHistory', JSON.stringify(history));
+    // Limit history to 50 items
+    const limitedHistory = history.slice(0, 50);
+    localStorage.setItem('summaryHistory', JSON.stringify(limitedHistory));
   };
   
   export const getSummaryHistory = () => {
