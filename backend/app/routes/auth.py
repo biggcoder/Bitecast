@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime, timedelta
 import jwt
-from jwt import PyJWTError
 
 from app.config.settings import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
@@ -54,7 +53,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
-    except PyJWTError:
+    except jwt.InvalidTokenError:
         raise credentials_exception
     user = get_user(fake_users_db, username=token_data.username)
     if user is None:
