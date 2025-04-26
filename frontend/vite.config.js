@@ -13,7 +13,10 @@ export default defineConfig({
         description: "Summarize YouTube videos using AI",
         manifest_version: 3,
         permissions: ["activeTab", "storage", "tabs"],
-        host_permissions: ["*://*.youtube.com/*"],
+        host_permissions: [
+          "http://localhost:8000/*",
+          "*://*.youtube.com/*"
+        ],
         action: {
           default_popup: "index.html",
           default_icon: {
@@ -38,5 +41,5 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
-  },
+  }
 });

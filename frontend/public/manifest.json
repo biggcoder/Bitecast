@@ -4,7 +4,10 @@
     "version": "1.0.0",
     "description": "Summarize YouTube videos using AI",
     "permissions": ["activeTab", "storage", "tabs"],
-    "host_permissions": ["*://*.youtube.com/*"],
+    "host_permissions": [
+      "http://localhost:8000/*",
+      "*://*.youtube.com/*"
+    ],
     "action": {
       "default_popup": "index.html",
       "default_icon": {
@@ -28,3 +31,4 @@
       }
     ]
   }
+  
