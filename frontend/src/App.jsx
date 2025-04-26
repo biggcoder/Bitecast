@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Summary from './pages/Summary';
+import History from './pages/History';
+import Settings from './pages/Settings';
+import { useAuth } from './contexts/AuthContext';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const [currentUrl, setCurrentUrl] = useState('');
+
+  useEffect(() => {
+    if (chrome.runtime) {
+      chrome.runtime.sendMessage({ action: "getCurrentUrl" }, (response) => {
+        if (response && response.url) {
+          setCurrentUrl(response.url);
+        }
+      });
+    }
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="w-96 h-[600px] bg-gray-50 flex flex-col">
+      <Navbar />
+      <div className="flex-1 overflow-auto p-4">
+        <Routes>
+          <Route path="/" element={<Home currentUrl={currentUrl} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/summary/:videoId" element={<Summary />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
