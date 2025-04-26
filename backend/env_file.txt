@@ -1,0 +1,11 @@
+# API Keys
+Open_AI_API="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"
+gemini_API="AIzaSyC27TQclL92VY5VBxr781IxKI_bMkbgJ5g"
+
+# Database settings
+DATABASE_URL="sqlite:///./app.db"
+
+# JWT settings
+SECRET_KEY="your-secret-key-for-development"
+ALGORITHM="HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES=30
